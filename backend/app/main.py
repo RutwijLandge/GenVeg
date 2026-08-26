@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.database import check_database_connection
+from app.routes.products import router as product_router
 
 
 app = FastAPI(
@@ -8,6 +9,9 @@ app = FastAPI(
     description="AI-powered conversational grocery shopping assistant",
     version="0.1.0",
 )
+
+
+app.include_router(product_router)
 
 
 @app.get("/")
