@@ -8,6 +8,7 @@ from app.services.product_service import (
     search_products,
 )
 
+from app.services.vector_search import semantic_search
 
 router = APIRouter(
     prefix="/api/products",
@@ -36,6 +37,12 @@ def search_product_catalog(
 ):
     return search_products(q)
 
+@router.get("/semantic-search")
+def semantic_product_search(
+    q: str = Query(..., min_length=2),
+    limit: int = Query(5, ge=1, le=20),
+):
+    return semantic_search(q, limit)
 
 @router.get("/{product_id}")
 def get_product(product_id: str):
@@ -48,3 +55,4 @@ def get_product(product_id: str):
         )
 
     return product
+
